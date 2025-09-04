@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>多功能工具箱</title>
+  <script src="https://cdn.jsdelivr.net/npm/opentype.js@1.3.4/dist/opentype.min.js"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- AOS 動畫 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+  <!-- ✅ SEO -->
+  <meta name="description" content="多功能工具箱：QRCode 生成、手寫字體、隨機產生器、文字轉語音、時鐘、單位換算等實用線上工具。">
+  <meta name="keywords" content="多功能工具箱, FayWooooo, QRCode生成, 手寫字體, 隨機產生器, 文字轉語音, 世界時鐘, 計時器, 碼表, 單位換算, 線上工具">
+  <meta name="author" content="FayWooooo">
+
+  <!-- ✅ 手機裝置最佳化 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ✅ Open Graph (社群分享用) -->
+  <meta property="og:title" content="多功能工具箱 - FayWooooo 線上工具">
+  <meta property="og:description" content="免費線上工具集合：QRCode、手寫字型、隨機生成器、文字轉語音、時鐘工具、單位換算。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://faywooooo.github.io/">
+  <meta property="og:image" content="https://faywooooo.github.io/assets/preview.png">
+
+  <!-- ✅ Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="多功能工具箱 - FayWooooo 線上工具">
+  <meta name="twitter:description" content="免費線上工具集合，隨時可用！">
+  <meta name="twitter:image" content="https://faywooooo.github.io/assets/preview.png">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "多功能工具箱 - FayWooooo",
+      "url": "https://faywooooo.github.io/",
+      "author": {
+        "@type": "Person",
+        "name": "FayWooooo"
+      },
+      "description": "免費線上工具集合：QRCode 生成、手寫字型、隨機產生器、文字轉語音、時鐘工具、單位換算。",
+      "inLanguage": "zh-Hant"
+    }
+    </script>
+    
+  <style>
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: linear-gradient(135deg, #f9f9f9, #e9eef5);
+      color: #333;
+    }
+    header {
+      top: 0;
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(10px);
+      padding: 15px;
+      text-align: center;
+      font-size: 50px;
+      font-weight: bold;
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(10px);
+    }
+    nav button {
+      flex: 1;
+      padding: 14px;
+      border: none;
+      cursor: pointer;
+      background: transparent;
+      color: #333;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+    nav button i { margin-right: 6px; }
+    nav button.active, nav button:hover {
+      color: #007aff;
+      font-weight: bold;
+    }
+    section {
+      display: none;
+      padding: 60px 20px;
+      min-height: 90vh;
+    }
+    section.active { display: block; }
+    .tool-box {
+      max-width: 800px;
+      margin: auto;
+      background: rgba(255,255,255,0.8);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      backdrop-filter: blur(10px);
+    }
+    h2 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #111;
+    }
+    input, textarea {
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 10px;
+      margin: 10px 0;
+      width: 80%;
+      font-size: 16px;
+    }
+    button.action {
+      background: #007aff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button.action:hover { background: #0056c9; }
+    canvas {
+      border: 2px dashed #aaa;
+      border-radius: 10px;
+      cursor: crosshair;
+    }
+    #qrcode { margin-top: 20px; }
+    /* Hero Section */
+    #home .tool-box {
+      text-align: center;
+      background: linear-gradient(135deg, #e3f2fd, #fce4ec);
+      color: #222;
+    }
+    #home h2 { font-size: 36px; }
+    #home ul {
+      list-style: none;
+      padding: 0;
+      font-size: 18px;
+      margin-top: 20px;
+    }
+    #home li { margin: 10px 0; }
+    /* 子分頁樣式 */
+  .subtab {
+    flex:1;
+    padding:10px;
+    border:none;
+    cursor:pointer;
+    background:#f0f0f0;
+    margin:0 5px;
+    border-radius:8px;
+    font-size:16px;
+  }
+  .subtab.active { background:#007aff; color:#fff; font-weight:bold; }
+  .subsection { display:none; }
+  .subsection.active { display:block; }
+  /* ===== 響應式漢堡選單 ===== */
+.hamburger {
+  display: none;
+  position: fixed;
+  top: 15px;
+  right: 20px;
+  font-size: 28px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 2000;
+  color: #333;
+}
+
+/* 手機 & 平板 */
+@media (max-width: 1024px) {
+  nav {
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    top: 60px;
+    right: 0;
+    width: 70%;
+    max-width: 250px;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    box-shadow: -2px 0 8px rgba(0,0,0,0.2);
+    border-radius: 8px 0 0 8px;
+    padding: 10px;
+    z-index: 3000;
+  }
+  nav.active { display: flex; }
+
+  nav button {
+    text-align: left;
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 18px;
+    border-bottom: 1px solid #ddd;
+  }
+  nav button:last-child {
+    border-bottom: none;
+  }
+  .hamburger { display: block; }
+}
+
+</style>
+</head>
+<body>
+    <button class="hamburger" onclick="toggleMenu()">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      
+<header>多功能工具箱</header>
+<nav>
+  <button class="tab active" data-target="home"><i class="fa-solid fa-house"></i>首頁</button>
+  <button class="tab" data-target="qr"><i class="fa-solid fa-qrcode"></i>QRCode生成</button>
+  <button class="tab" data-target="draw"><i class="fa-solid fa-pen"></i>手寫字體生成</button>
+  <button class="tab" data-target="random"><i class="fa-solid fa-dice"></i>隨機產生器</button>
+  <button class="tab" data-target="tts"><i class="fa-solid fa-volume-high"></i>文字轉語音</button>
+  <button class="tab" data-target="clock"><i class="fa-solid fa-clock"></i>時鐘工具</button>
+  <button class="tab" data-target="convert"><i class="fa-solid fa-ruler-combined"></i>單位換算</button>
+  <a href="https://faywooooo.github.io/FayAI/my_whiteboard.html" target="_blank"><button>小白板</button></a>
+</nav>
+
+<!-- 首頁 -->
+<section id="home" class="active" data-aos="fade-up">
+  <div class="tool-box">
+    <h2>歡迎來到 <i class="fa-solid fa-toolbox"></i> 多功能工具箱</h2>
+    <p>這裡集合了多種實用小工具：</p>
+    <ul>
+      <li><i class="fa-solid fa-qrcode"></i> QRCode生成</li>
+      <li><i class="fa-solid fa-pen"></i> 手寫字體生成</li>
+      <li><i class="fa-solid fa-dice"></i> 隨機產生器</li>
+      <li><i class="fa-solid fa-volume-high"></i> 文字轉語音</li>
+      <li><i class="fa-solid fa-clock"></i> 時鐘工具</li>
+      <li><i class="fa-solid fa-ruler-combined"></i> 單位換算</li>
+    </ul>
+  </div>
+</section>
+
+<!-- QRCode -->
+<section id="qr" data-aos="fade-up">
+  <div class="tool-box">
+    <h2><i class="fa-solid fa-qrcode"></i> QRCode 製作</h2>
+    <input type="text" id="qr-text" placeholder="輸入文字或網址">
+    <button class="action" onclick="makeQR()">生成 QRCode</button>
+    <div id="qrcode"></div>
+  </div>
+</section>
+
+<!-- 白板 TTF -->
+<section id="draw" data-aos="fade-up">
+  <div class="tool-box">
+    <h2><i class="fa-solid fa-pen"></i> 手寫字型生成器</h2>
+    <label>字型檔案名稱：
+      <input type="text" id="fontName" placeholder="輸入檔名" value="myfont">
+    </label>
+      
+    <p>請依序在白板上手寫每個字，完成後才可下載字型。</p>
+    <p style="font-size: 25px;font-weight: bold;color: red;">注意！此手寫字體工具目前僅提供手寫英數字！</p>
+    <h3 id="current-char"></h3>
+
+    <label>筆刷粗細：
+      <input type="range" id="penSize" min="1" max="20" value="4">
+      <span id="penSizeVal">4</span> px
+    </label><br><br>
+
+    <canvas id="canvas" width="300" height="300"></canvas><br>
+    <button class="action" onclick="clearCanvas()">清除</button>
+    <button class="action" onclick="saveChar()">存這個字</button>
+    <button class="action" onclick="skipChar()">跳過</button>
+    <button class="action" onclick="deleteChar()">刪除</button>
+    <button class="action" onclick="downloadFont()">下載字型 (TTF)</button>
+    <p style="color:#666">✅ 輸出的字型包含手寫筆劃路徑（自動縮放置中）。</p>
+  </div>
+</section>
+<!-- 隨機產生器 -->
+<section id="random" data-aos="fade-up">
+  <div class="tool-box">
+    <h2><i class="fa-solid fa-dice"></i> 隨機產生器</h2>
+    <select id="random-type">
+      <option value="name">姓名</option>
+      <option value="phone">電話</option>
+      <option value="password">密碼</option>
+      <option value="address">地址</option>
+    </select>
+    <button class="action" onclick="generateRandom()">生成</button>
+    <p id="random-result" style="font-size:20px; font-weight:bold; margin-top:15px;"></p>
+  </div>
+</section>
+
+<!-- 文字轉語音 -->
+<section id="tts" data-aos="fade-up">
+  <div class="tool-box">
+    <h2><i class="fa-solid fa-volume-high"></i> 文字轉語音</h2>
+    <textarea id="tts-text" rows="4" placeholder="輸入文字..."></textarea><br>
+    <button class="action" onclick="speakText()">播放語音</button>
+  </div>
+</section>
+<!-- 🕒 各地時鐘 + 計時器 + 碼表 -->
+<section id="clock" data-aos="fade-up">
+  <div class="tool-box">
+    <h2><i class="fa-solid fa-clock"></i> 時鐘工具</h2>
+
+    <!-- 子選單 -->
+    <div style="display:flex; justify-content:center; margin-bottom:15px;">
+      <button class="subtab active" data-target="sub-world">世界時鐘</button>
+      <button class="subtab" data-target="sub-timer">計時器</button>
+      <button class="subtab" data-target="sub-stopwatch">碼表</button>
+    </div>
+
+    <!-- 🌍 世界時鐘 -->
+    <div class="subsection active" id="sub-world">
+      <h3>世界時鐘</h3>
+      <p>台北：<span id="taipei"></span></p>
+      <p>東京：<span id="tokyo"></span></p>
+      <p>倫敦：<span id="london"></span></p>
+      <p>紐約：<span id="newyork"></span></p>
+    </div>
+
+    <!-- ⏳ 計時器 -->
+    <div class="subsection" id="sub-timer">
+      <h3>計時器</h3>
+      <input type="number" id="timer-hours" placeholder="小時" style="width:80px"> :
+      <input type="number" id="timer-mins" placeholder="分鐘" style="width:80px"> :
+      <input type="number" id="timer-secs" placeholder="秒" style="width:80px">
+      <br><br>
+      <button class="action" onclick="startTimer()">開始</button>
+      <button class="action" onclick="resetTimer()">重設</button>
+      <p id="timer-display">00:00:00</p>
+    </div>
+
+    <!-- ⏱ 碼表 -->
+    <div class="subsection" id="sub-stopwatch">
+      <h3>碼表</h3>
+      <button class="action" onclick="startStopwatch()">開始</button>
+      <button class="action" onclick="stopStopwatch()">停止</button>
+      <button class="action" onclick="resetStopwatch()">重設</button>
+      <p id="stopwatch-display">00:00:00.000</p>
+    </div>
+  </div>
+</section>
+
+<!-- 📏 單位換算 -->
+<section id="convert" data-aos="fade-up">
+  <div class="tool-box">
+    <h2><i class="fa-solid fa-ruler-combined"></i> 單位換算</h2>
+    <select id="convert-type">
+      <option value="length">長度 (公尺 ↔ 公里 ↔ 英里)</option>
+      <option value="weight">重量 (公斤 ↔ 磅)</option>
+      <option value="temp">溫度 (°C ↔ °F)</option>
+    </select><br>
+    <input type="number" id="convert-input" placeholder="輸入數值">
+    <button class="action" onclick="doConvert()">換算</button>
+    <p id="convert-result"></p>
+  </div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+  AOS.init({ duration: 1000, once: true });
+
+  // Tab 切換
+  const tabs = document.querySelectorAll(".tab");
+  const sections = document.querySelectorAll("section");
+  tabs.forEach(btn => {
+    btn.addEventListener("click", () => {
+      tabs.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      sections.forEach(sec => sec.classList.remove("active"));
+      document.getElementById(btn.dataset.target).classList.add("active");
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+
+  // QRCode
+  function makeQR() {
+    const text = document.getElementById("qr-text").value;
+    if (!text) return alert("請輸入內容");
+    document.getElementById("qrcode").innerHTML = "";
+    new QRCode(document.getElementById("qrcode"), {
+      text: text, width: 200, height: 200
+    });
+  }
+
+  // ===== 白板字型生成器 =====
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxy0123456789".split("");
+  let currentIndex = 0;
+  let written = {};   // 已完成的字
+  let strokes = {};   // 筆劃資料
+  let currentStroke = [];
+  const currentCharDisplay = document.getElementById("current-char");
+  const penSizeInput = document.getElementById("penSize");
+  const penSizeVal = document.getElementById("penSizeVal");
+
+  function showChar(){
+    if(currentIndex < chars.length){
+      currentCharDisplay.textContent = "正在書寫: " + chars[currentIndex];
+    }else{
+      currentCharDisplay.textContent = "✅ 所有字已完成或跳過，可以下載字型";
+    }
+  }
+  showChar();
+
+  // 更新粗細顯示
+  penSizeInput.addEventListener("input",()=>{
+    penSizeVal.textContent = penSizeInput.value;
+  });
+
+  // 白板繪圖
+  const canvas = document.getElementById("canvas"), ctx = canvas.getContext("2d");
+  let drawing=false;
+
+  canvas.addEventListener("mousedown",e=>{
+    drawing=true;
+    currentStroke = [[e.offsetX, e.offsetY]];
+    ctx.beginPath();
+    ctx.moveTo(e.offsetX, e.offsetY);
+  });
+
+  canvas.addEventListener("mouseup",()=>{
+    if(drawing){
+      if(!strokes[chars[currentIndex]]) strokes[chars[currentIndex]] = [];
+      strokes[chars[currentIndex]].push(currentStroke);
+    }
+    drawing=false;
+  });
+
+  canvas.addEventListener("mousemove",e=>{
+    if(!drawing)return;
+    ctx.lineWidth = penSizeInput.value;
+    ctx.lineCap = "round";
+    ctx.strokeStyle = "black";
+    ctx.lineTo(e.offsetX, e.offsetY);
+    ctx.stroke();
+    currentStroke.push([e.offsetX, e.offsetY]);
+  });
+
+  function clearCanvas(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+  }
+
+  function saveChar(){
+    if(currentIndex >= chars.length) return;
+    written[chars[currentIndex]] = true;
+    clearCanvas();
+    currentIndex++;
+    showChar();
+  }
+
+  function skipChar(){
+    if(currentIndex >= chars.length) return;
+    clearCanvas();
+    currentIndex++;
+    showChar();
+  }
+
+  function deleteChar(){
+    if(currentIndex >= chars.length) return;
+    const ch = chars[currentIndex];
+    if(written[ch]){
+      delete written[ch];
+      delete strokes[ch];
+      alert("已刪除 " + ch + "，可以重新書寫。");
+    }else{
+      alert("⚠️ 目前沒有存過 " + ch);
+    }
+    clearCanvas();
+  }
+
+  function downloadFont(){
+    if(Object.keys(written).length === 0){
+      alert("⚠️ 你還沒有寫任何字！");
+      return;
+    }
+
+    let filename = document.getElementById("fontName").value.trim();
+    if(filename === "") filename = "myfont";
+
+    let glyphs = [];
+
+    Object.keys(written).forEach(ch=>{
+      if(!strokes[ch]) return;
+
+      // 計算邊界
+      let minX=Infinity, minY=Infinity, maxX=-Infinity, maxY=-Infinity;
+      strokes[ch].forEach(stroke=>{
+        stroke.forEach(([x,y])=>{
+          if(x<minX) minX=x;
+          if(y<minY) minY=y;
+          if(x>maxX) maxX=x;
+          if(y>maxY) maxY=y;
+        });
+      });
+      let width=maxX-minX, height=maxY-minY;
+      if(width<=0) width=1;
+      if(height<=0) height=1;
+
+      const scale = Math.min(800/width,800/height);
+      const xOffset = (1000 - width*scale)/2 - minX*scale;
+      const yOffset = (800 - height*scale) - minY*scale;
+
+      const path=new opentype.Path();
+      strokes[ch].forEach(stroke=>{
+        if(stroke.length>1){
+          path.moveTo(stroke[0][0]*scale+xOffset, stroke[0][1]*scale+yOffset);
+          for(let i=1;i<stroke.length;i++){
+            path.lineTo(stroke[i][0]*scale+xOffset, stroke[i][1]*scale+yOffset);
+          }
+        }
+      });
+
+      glyphs.push(new opentype.Glyph({
+        name: ch,
+        unicode: ch.charCodeAt(0),
+        advanceWidth: 1000,
+        path: path
+      }));
+    });
+
+    const font=new opentype.Font({
+      familyName: filename,
+      styleName: "Regular",
+      unitsPerEm: 1000,
+      ascender: 800,
+      descender: -200,
+      glyphs: glyphs
+    });
+
+    const arrayBuffer=font.toArrayBuffer();
+    const blob=new Blob([arrayBuffer],{type:"font/ttf"});
+    const url=URL.createObjectURL(blob);
+    const link=document.createElement("a");
+    link.href=url;
+    link.download=filename+".ttf";
+    link.click();
+  }
+
+  // TTS
+  function speakText(){
+    const text=document.getElementById("tts-text").value;
+    if(!text) return alert("請輸入文字");
+    const utterance=new SpeechSynthesisUtterance(text);
+    utterance.lang="zh-TW";
+    speechSynthesis.speak(utterance);
+  }
+  // ===== 隨機產生器 =====
+
+// 台灣常見姓氏（百家姓 + 常見台灣姓）
+const lastNames = "趙錢孫李周吳鄭王馮陳褚衛蔣沈韓楊朱秦尤許何呂施張孔曹嚴華金魏陶姜戚謝鄒喻柏水竇章雲蘇潘葛奚范彭郎魯韋昌馬苗鳳花方俞任袁柳酆鮑史唐費廉岑薛雷賀倪湯滕殷羅畢郝鄔安常樂於時傅皮卞齊康伍余元卜顧孟平黃和穆蕭尹姚邵湛汪祁毛禹狄米貝明臧計伏成戴談宋茅龔".split("");
+
+// 名字常用字庫（單字，隨機配兩個）
+const firstNameChars = "中文華國民偉志豪俊傑明建宏嘉佳怡佩美玲欣雅婷詩涵淑惠志強冠宇柏翰承恩家豪佳穎育廷育豪子豪宗翰".split("");
+
+// ===== 台灣 22 縣市 + 行政區 =====
+const taiwanRegions = {
+  "台北市": ["中正區","大同區","中山區","松山區","大安區","萬華區","信義區","士林區","北投區","內湖區","南港區","文山區"],
+  "新北市": ["板橋區","新莊區","中和區","永和區","土城區","樹林區","三峽區","鶯歌區","三重區","蘆洲區","五股區","泰山區","林口區","八里區","淡水區","金山區","萬里區","汐止區","瑞芳區","貢寮區","雙溪區","石門區","三芝區","石碇區","坪林區","烏來區"],
+  "桃園市": ["桃園區","中壢區","平鎮區","八德區","楊梅區","蘆竹區","龜山區","龍潭區","大溪區","大園區","觀音區","新屋區","復興區"],
+  "台中市": ["中區","東區","南區","西區","北區","西屯區","南屯區","北屯區","豐原區","東勢區","大甲區","清水區","沙鹿區","梧棲區","后里區","神岡區","潭子區","大雅區","新社區","石岡區","外埔區","大安區","烏日區","大肚區","龍井區","霧峰區","太平區","大里區","和平區"],
+  "台南市": ["中西區","東區","南區","北區","安平區","安南區","永康區","歸仁區","新化區","左鎮區","玉井區","楠西區","南化區","仁德區","關廟區","龍崎區","官田區","麻豆區","佳里區","西港區","七股區","將軍區","學甲區","北門區","新營區","後壁區","白河區","東山區","六甲區","下營區","柳營區","鹽水區","善化區","大內區","山上區","新市區","安定區"],
+  "高雄市": ["鹽埕區","鼓山區","左營區","楠梓區","三民區","新興區","前金區","苓雅區","前鎮區","旗津區","小港區","鳳山區","大寮區","鳥松區","林園區","仁武區","大樹區","大社區","岡山區","路竹區","橋頭區","梓官區","彌陀區","永安區","燕巢區","田寮區","阿蓮區","茄萣區","湖內區","旗山區","美濃區","內門區","杉林區","甲仙區","六龜區","茂林區","桃源區","那瑪夏區"],
+  "基隆市": ["仁愛區","中正區","信義區","中山區","安樂區","暖暖區","七堵區"],
+  "新竹市": ["東區","北區","香山區"],
+  "嘉義市": ["東區","西區"],
+  "新竹縣": ["竹北市","竹東鎮","新埔鎮","關西鎮","湖口鄉","新豐鄉","峨眉鄉","寶山鄉","北埔鄉","芎林鄉","橫山鄉","尖石鄉","五峰鄉"],
+  "苗栗縣": ["苗栗市","頭份市","竹南鎮","後龍鎮","通霄鎮","苑裡鎮","卓蘭鎮","西湖鄉","頭屋鄉","公館鄉","銅鑼鄉","三義鄉","造橋鄉","三灣鄉","南庄鄉","大湖鄉","獅潭鄉","泰安鄉"],
+  "彰化縣": ["彰化市","員林市","鹿港鎮","和美鎮","溪湖鎮","二林鎮","田中鎮","北斗鎮","花壇鄉","芬園鄉","大村鄉","永靖鄉","伸港鄉","線西鄉","福興鄉","秀水鄉","埔心鄉","埔鹽鄉","大城鄉","芳苑鄉","竹塘鄉","社頭鄉","二水鄉","田尾鄉","埤頭鄉"],
+  "南投縣": ["南投市","埔里鎮","草屯鎮","竹山鎮","集集鎮","名間鄉","鹿谷鄉","中寮鄉","魚池鄉","水里鄉","國姓鄉","信義鄉","仁愛鄉"],
+  "雲林縣": ["斗六市","斗南鎮","虎尾鎮","西螺鎮","土庫鎮","北港鎮","古坑鄉","大埤鄉","莿桐鄉","林內鄉","二崙鄉","崙背鄉","麥寮鄉","東勢鄉","褒忠鄉","臺西鄉","四湖鄉","口湖鄉","水林鄉"],
+  "嘉義縣": ["太保市","朴子市","布袋鎮","大林鎮","民雄鄉","溪口鄉","新港鄉","六腳鄉","東石鄉","義竹鄉","鹿草鄉","水上鄉","中埔鄉","竹崎鄉","梅山鄉","番路鄉","大埔鄉","阿里山鄉"],
+  "屏東縣": ["屏東市","潮州鎮","東港鎮","恆春鎮","萬丹鄉","長治鄉","麟洛鄉","九如鄉","里港鄉","鹽埔鄉","高樹鄉","萬巒鄉","內埔鄉","竹田鄉","新埤鄉","枋寮鄉","新園鄉","崁頂鄉","林邊鄉","南州鄉","佳冬鄉","琉球鄉","車城鄉","滿州鄉","枋山鄉","三地門鄉","瑪家鄉","泰武鄉","來義鄉","春日鄉","獅子鄉","牡丹鄉"],
+  "宜蘭縣": ["宜蘭市","羅東鎮","蘇澳鎮","頭城鎮","礁溪鄉","壯圍鄉","員山鄉","冬山鄉","五結鄉","三星鄉","大同鄉","南澳鄉"],
+  "花蓮縣": ["花蓮市","鳳林鎮","玉里鎮","新城鄉","吉安鄉","壽豐鄉","光復鄉","豐濱鄉","瑞穗鄉","富里鄉","秀林鄉","萬榮鄉","卓溪鄉"],
+  "台東縣": ["台東市","成功鎮","關山鎮","卑南鄉","鹿野鄉","池上鄉","東河鄉","長濱鄉","太麻里鄉","大武鄉","綠島鄉","海端鄉","延平鄉","金峰鄉","達仁鄉","蘭嶼鄉"],
+  "澎湖縣": ["馬公市","湖西鄉","白沙鄉","西嶼鄉","望安鄉","七美鄉"],
+  "金門縣": ["金城鎮","金湖鎮","金沙鎮","金寧鄉","烈嶼鄉","烏坵鄉"],
+  "連江縣": ["南竿鄉","北竿鄉","莒光鄉","東引鄉"]
+};
+
+
+// 產生隨機姓名
+function randomName(){
+  const last = lastNames[Math.floor(Math.random()*lastNames.length)];
+  const first1 = firstNameChars[Math.floor(Math.random()*firstNameChars.length)];
+  const first2 = firstNameChars[Math.floor(Math.random()*firstNameChars.length)];
+  return last + first1 + first2;
+}
+function numberToChinese(num) {
+  const units = ["","十","百","千"];
+  const chars = ["零","一","二","三","四","五","六","七","八","九"];
+  if(num === 0) return "零";
+  let str = "";
+  let unitPos = 0;
+  while(num > 0){
+    const digit = num % 10;
+    if(digit > 0){
+      str = chars[digit] + units[unitPos] + str;
+    }else if(!str.startsWith("零") && str !== ""){
+      str = "零" + str;
+    }
+    unitPos++;
+    num = Math.floor(num/10);
+  }
+  return str.replace(/^一十/,"十");
+}
+
+// 產生隨機地址
+function randomAddress(){
+    const cities = Object.keys(taiwanRegions);
+    const city = cities[Math.floor(Math.random()*cities.length)];
+    const district = taiwanRegions[city][Math.floor(Math.random()*taiwanRegions[city].length)];
+  
+    // 路 or 街
+    const roadType = Math.random()>0.5 ? "路" : "街";
+    const roadName = numberToChinese(Math.floor(Math.random()*50)+1) + roadType;
+  
+    // 巷（中文數字）
+    const lane = Math.random()>0.5 ? numberToChinese(Math.floor(Math.random()*100)+1) + "巷" : "";
+  
+    // 弄 (可選)
+    const alley = Math.random()>0.3 ? numberToChinese(Math.floor(Math.random()*50)+1) + "弄" : "";
+  
+    // 號
+    const number = numberToChinese(Math.floor(Math.random()*500)+1) + "號";
+  
+    // 樓
+    const floor = numberToChinese(Math.floor(Math.random()*20)+1) + "樓";
+  
+    // 室 (可選)
+    const room = Math.random()>0.5 ? numberToChinese(Math.floor(Math.random()*10)+1) + "室" : "";
+  
+    return `${city}${district}${roadName}${lane}${alley}${number}${floor}${room}`;
+  }
+  
+
+// 主控制
+function generateRandom(){
+  const type = document.getElementById("random-type").value;
+  let result = "";
+
+  if(type === "name"){
+    result = randomName();
+  }
+  else if(type === "phone"){
+    result = "09" + Math.floor(100000000 + Math.random()*900000000).toString();
+  }
+  else if(type === "password"){
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
+    for(let i=0;i<12;i++){
+      result += chars[Math.floor(Math.random()*chars.length)];
+    }
+  }
+  else if(type === "address"){
+    result = randomAddress();
+  }
+
+  document.getElementById("random-result").textContent = result;
+}
+
+/* ===== 子分頁切換 ===== */
+const subtabs=document.querySelectorAll(".subtab");
+const subsections=document.querySelectorAll(".subsection");
+subtabs.forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    subtabs.forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    subsections.forEach(s=>s.classList.remove("active"));
+    document.getElementById(btn.dataset.target).classList.add("active");
+  });
+});
+
+/* ===== 世界時鐘 ===== */
+function updateClocks(){
+  const now=new Date();
+  document.getElementById("taipei").textContent=now.toLocaleTimeString("zh-TW",{timeZone:"Asia/Taipei"});
+  document.getElementById("tokyo").textContent=now.toLocaleTimeString("ja-JP",{timeZone:"Asia/Tokyo"});
+  document.getElementById("london").textContent=now.toLocaleTimeString("en-GB",{timeZone:"Europe/London"});
+  document.getElementById("newyork").textContent=now.toLocaleTimeString("en-US",{timeZone:"America/New_York"});
+}
+setInterval(updateClocks,1000); updateClocks();
+
+/* ===== 計時器 ===== */
+let timerInterval;
+function startTimer(){
+  let h=parseInt(document.getElementById("timer-hours").value)||0;
+  let m=parseInt(document.getElementById("timer-mins").value)||0;
+  let s=parseInt(document.getElementById("timer-secs").value)||0;
+  let total=h*3600+m*60+s;
+  if(total<=0) return alert("請輸入時間");
+  clearInterval(timerInterval);
+  timerInterval=setInterval(()=>{
+    if(total<=0){clearInterval(timerInterval);alert("時間到！");return;}
+    total--;
+    let hh=String(Math.floor(total/3600)).padStart(2,"0");
+    let mm=String(Math.floor((total%3600)/60)).padStart(2,"0");
+    let ss=String(total%60).padStart(2,"0");
+    document.getElementById("timer-display").textContent=`${hh}:${mm}:${ss}`;
+  },1000);
+}
+function resetTimer(){
+  clearInterval(timerInterval);
+  document.getElementById("timer-display").textContent="00:00:00";
+}
+
+/* ===== 碼表 (毫秒) ===== */
+let stopwatchInterval, swMs=0;
+function startStopwatch(){
+  clearInterval(stopwatchInterval);
+  stopwatchInterval=setInterval(()=>{
+    swMs+=10;
+    let h=String(Math.floor(swMs/3600000)).padStart(2,"0");
+    let m=String(Math.floor((swMs%3600000)/60000)).padStart(2,"0");
+    let s=String(Math.floor((swMs%60000)/1000)).padStart(2,"0");
+    let ms=String(swMs%1000).padStart(3,"0");
+    document.getElementById("stopwatch-display").textContent=`${h}:${m}:${s}.${ms}`;
+  },10);
+}
+function stopStopwatch(){ clearInterval(stopwatchInterval); }
+function resetStopwatch(){ clearInterval(stopwatchInterval); swMs=0; document.getElementById("stopwatch-display").textContent="00:00:00.000"; }
+
+
+/* ===== 單位換算 ===== */
+function doConvert(){
+  const type=document.getElementById("convert-type").value;
+  const val=parseFloat(document.getElementById("convert-input").value);
+  let result="";
+  if(isNaN(val)) return alert("請輸入數字");
+  if(type==="length"){
+    result=`${val} 公尺 = ${(val/1000).toFixed(3)} 公里 = ${(val/1609.34).toFixed(3)} 英里`;
+  }else if(type==="weight"){
+    result=`${val} 公斤 = ${(val*2.20462).toFixed(3)} 磅`;
+  }else if(type==="temp"){
+    result=`${val}°C = ${(val*9/5+32).toFixed(1)}°F | ${val}°F = ${((val-32)*5/9).toFixed(1)}°C`;
+  }
+  document.getElementById("convert-result").textContent=result;
+}
+// 漢堡選單切換
+function toggleMenu(){
+  document.querySelector("nav").classList.toggle("active");
+}
+
+</script>
+
+</body>
+</html>
